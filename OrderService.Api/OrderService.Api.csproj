@@ -10,4 +10,10 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OrderService.Application\OrderService.Application.csproj" />
+    <ProjectReference Include="..\OrderService.Core\OrderService.Core.csproj" />
+    <ProjectReference Include="..\OrderService.Infrastructure\OrderService.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
