@@ -1,6 +1,13 @@
-﻿namespace OrderService.Core.Interfaces;
+﻿using OrderService.Core.Entities;
 
-public interface IUnitOfWork
+namespace OrderService.Core.Interfaces;
+
+public interface IUnitOfWork : IDisposable
 {
-	
+	IOrderRepository Orders { get;  }
+	IRepository<T> repository<T>() where T : class;
+
+	//Task NotifyProductAdded(Order order);
+
+	Task Complete();
 }

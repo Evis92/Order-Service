@@ -1,15 +1,15 @@
 ﻿using OrderService.Core.Interfaces;
 
-namespace OrderService.Application.Services;
+namespace OrderService.Infrastructure.Repositories;
 
-public class GenericService<T> : IGenericService<T> where T : class
+public class Repository<T> : IRepository<T> where T : class
 {
-	public Task<IEnumerable<T>> GetAll()
+	public Task<T>? GetById(int id)
 	{
 		throw new NotImplementedException();
 	}
 
-	public Task<T>? GetById(int id)
+	public Task<IEnumerable<T>>? GetAll()
 	{
 		throw new NotImplementedException();
 	}

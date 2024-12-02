@@ -1,6 +1,12 @@
-﻿namespace OrderService.Infrastructure.Repositories;
+﻿using OrderService.Core.Entities;
+using OrderService.Core.Interfaces;
 
-public class OrderRepository
+namespace OrderService.Infrastructure.Repositories;
+
+public class OrderRepository : Repository<Order>, IOrderRepository
 {
-	
+	public OrderRepository()
+	{
+		
+	}
 }
