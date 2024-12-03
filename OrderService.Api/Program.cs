@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using OrderService.Application.Notifications;
 using OrderService.Core.Interfaces;
 using OrderService.Core.Interfaces.Order;
@@ -10,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-//builder.Services.AddDbContext<OrderDbContext>(options => options.UseInMemoryDatabase("MyDatabase"));
+builder.Services.AddDbContext<OrderDbContext>(options => options.UseInMemoryDatabase("MyDatabase"));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
