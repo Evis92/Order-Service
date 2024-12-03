@@ -59,7 +59,7 @@ public class OrderController : ControllerBase
 
     }
 
-    [HttpDelete("{id")]
+    [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteOrder(int id)
     {
         await _orderService.Delete(id);
