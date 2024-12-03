@@ -1,31 +1,46 @@
-﻿using OrderService.Core.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using OrderService.Core.Interfaces;
+using OrderService.Infrastructure.Data;
 
 namespace OrderService.Infrastructure.Repositories;
 
 public class Repository<T> : IRepository<T> where T : class
 {
-	public Task<T>? GetById(int id)
+	private readonly OrderDbContext _dbContext;
+	protected readonly DbSet<T> _dbSet;
+
+	public Repository(OrderDbContext dbContext)
 	{
-		throw new NotImplementedException();
+		_dbContext = dbContext;
+		_dbSet = dbContext.Set<T>();
 	}
 
-	public Task<IEnumerable<T>>? GetAll()
+	public async Task<T>? GetById(int id)
 	{
-		throw new NotImplementedException();
+		return await _dbSet.FindAsync(id);
 	}
 
-	public Task Add(T entity)
+	public async Task<IEnumerable<T>>? GetAll()
 	{
-		throw new NotImplementedException();
+		return await _dbSet.ToListAsync();
 	}
 
-	public Task Update(T entity)
+	public async Task Add(T entity)
 	{
-		throw new NotImplementedException();
+		await _dbSet.AddAsync(entity);
 	}
 
-	public Task Delete(int id)
+	public async Task Update(T entity)
 	{
-		throw new NotImplementedException();
+		_dbSet.Update(entity);
+	}
+
+	public async Task Delete(int id)
+	{
+		var entity = await _dbSet.FindAsync(id);
+		if (entity != null)
+		{
+			_dbSet.Remove(entity);
+		}
 	}
 }

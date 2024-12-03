@@ -7,7 +7,7 @@ public interface IUnitOfWork : IDisposable
 	IOrderRepository Orders { get;  }
 	IRepository<T> repository<T>() where T : class;
 
-	//Task NotifyProductAdded(Order order);
+	Task NotifyOrderCreated(Order order);
 
 	Task Complete();
 }

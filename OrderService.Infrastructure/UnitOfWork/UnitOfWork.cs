@@ -1,33 +1,42 @@
-﻿using OrderService.Core.Interfaces;
+﻿using OrderService.Application.Notifications;
+using OrderService.Core.Entities;
+using OrderService.Core.Interfaces;
 using OrderService.Infrastructure.Data;
+using OrderService.Infrastructure.Repositories;
 
 namespace OrderService.Infrastructure.UnitOfWork;
 
 public class UnitOfWork : IUnitOfWork
 {
 	private readonly OrderDbContext _dbContext;
+	private readonly OrderSubject _orderSubject;
 	public IOrderRepository Orders { get; set; }
 
-	public UnitOfWork(OrderDbContext dbContext, IOrderRepository orderRepository)
+	public UnitOfWork(OrderDbContext dbContext, OrderSubject orderSubject, IOrderRepository orderRepository)
 	{
 		_dbContext = dbContext;
 		Orders = orderRepository;
+		_orderSubject = orderSubject ?? new OrderSubject();
 	}
-
 
 
 	public IRepository<T> repository<T>() where T : class
 	{
-		throw new NotImplementedException();
+		return new Repository<T>(_dbContext);
 	}
 
-	public Task Complete()
+	public async Task NotifyOrderCreated(Order order)
 	{
-		throw new NotImplementedException();
+		_orderSubject.Notify(order);
+	}
+
+	public async Task Complete()
+	{
+		await _dbContext.SaveChangesAsync();
 	}
 
 	public void Dispose()
 	{
-		throw new NotImplementedException();
+		_dbContext.Dispose();
 	}
 }
