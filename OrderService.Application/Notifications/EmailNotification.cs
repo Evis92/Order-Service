@@ -1,4 +1,6 @@
-﻿using OrderService.Core.Entities;
+﻿
+
+using OrderService.Core.Entities;
 
 namespace OrderService.Application.Notifications;
 

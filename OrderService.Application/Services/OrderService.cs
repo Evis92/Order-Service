@@ -16,6 +16,7 @@ public class OrderService : GenericService<Order>, IOrderService
 	public override async Task Add(Order order)
 	{
 		await _unitOfWork.Orders.Add(order);
+		await _unitOfWork.Complete();
 		await _unitOfWork.NotifyOrderCreated(order);
 	}
 }

@@ -11,7 +11,7 @@ public class UnitOfWork : IUnitOfWork
 {
 	private readonly OrderDbContext _dbContext;
 	private readonly OrderSubject _orderSubject;
-	public IOrderRepository Orders { get; set; }
+	public IOrderRepository Orders { get; }
 
 	public UnitOfWork(OrderDbContext dbContext, OrderSubject orderSubject, IOrderRepository orderRepository)
 	{
