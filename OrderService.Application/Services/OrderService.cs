@@ -1,5 +1,6 @@
 ﻿using OrderService.Core.Entities;
 using OrderService.Core.Interfaces;
+using OrderService.Core.Interfaces.Order;
 
 namespace OrderService.Application.Services;
 

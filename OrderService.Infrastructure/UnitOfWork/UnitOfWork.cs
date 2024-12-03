@@ -1,6 +1,7 @@
 ﻿using OrderService.Application.Notifications;
 using OrderService.Core.Entities;
 using OrderService.Core.Interfaces;
+using OrderService.Core.Interfaces.Order;
 using OrderService.Infrastructure.Data;
 using OrderService.Infrastructure.Repositories;
 

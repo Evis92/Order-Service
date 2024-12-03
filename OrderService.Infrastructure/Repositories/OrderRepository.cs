@@ -1,5 +1,5 @@
 ﻿using OrderService.Core.Entities;
-using OrderService.Core.Interfaces;
+using OrderService.Core.Interfaces.Order;
 using OrderService.Infrastructure.Data;
 
 namespace OrderService.Infrastructure.Repositories;
