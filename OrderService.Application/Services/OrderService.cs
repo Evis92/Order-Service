@@ -1,6 +1,20 @@
-﻿namespace OrderService.Application.Services;
+﻿using OrderService.Core.Entities;
+using OrderService.Core.Interfaces;
 
-public class OrderService
+namespace OrderService.Application.Services;
+
+public class OrderService : GenericService<Order>, IOrderService
 {
-	
+	private readonly IUnitOfWork _unitOfWork;
+
+	public OrderService(IUnitOfWork unitOfWork) : base(unitOfWork)
+	{
+		_unitOfWork = unitOfWork;
+	}
+
+	public override async Task Add(Order order)
+	{
+		await Add(order);
+		await _unitOfWork.NotifyOrderCreated(order);
+	}
 }

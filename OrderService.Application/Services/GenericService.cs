@@ -4,28 +4,40 @@ namespace OrderService.Application.Services;
 
 public class GenericService<T> : IGenericService<T> where T : class
 {
-	public Task<IEnumerable<T>> GetAll()
+	private readonly IUnitOfWork _unitOfWork;
+	private readonly IRepository<T> _repository;
+
+	public GenericService(IUnitOfWork unitOfWork)
 	{
-		throw new NotImplementedException();
+		_unitOfWork = unitOfWork;
+		_repository = unitOfWork.repository<T>();
 	}
 
-	public Task<T>? GetById(int id)
+	public async Task<IEnumerable<T>> GetAll()
 	{
-		throw new NotImplementedException();
+		return await _repository.GetAll();
 	}
 
-	public Task Add(T entity)
+	public async Task<T>? GetById(int id)
 	{
-		throw new NotImplementedException();
+		return await _repository.GetById(id);
 	}
 
-	public Task Update(T entity)
+	public virtual async Task Add(T entity)
 	{
-		throw new NotImplementedException();
+		await _repository.Add(entity);
+		await _unitOfWork.Complete();
 	}
 
-	public Task Delete(int id)
+	public async Task Update(T entity)
 	{
-		throw new NotImplementedException();
+		await _repository.Update(entity);
+		await _unitOfWork.Complete();
+	}
+
+	public async Task Delete(int id)
+	{
+		await _repository.Delete(id);
+		await _unitOfWork.Complete();
 	}
 }
