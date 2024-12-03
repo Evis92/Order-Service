@@ -2,7 +2,7 @@
 
 namespace OrderService.Core.Interfaces.Order;
 
-public interface IOrderService : IGenericService<Order>
+public interface IOrderService : IGenericService<Entities.Order>
 {
 
 }
