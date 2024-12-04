@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Microsoft.EntityFrameworkCore;
 using OrderService.Application.Notifications;
 using OrderService.Application.Services;
@@ -14,7 +15,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<OrderDbContext>(options => options.UseInMemoryDatabase("OrderDatabase"));
+//INMEMORYDATABASE
+//builder.Services.AddDbContext<OrderDbContext>(options => options.UseInMemoryDatabase("OrderDatabase"));
+
+var connectionString = builder.Configuration.GetConnectionString("OrderDb");
+builder.Services.AddDbContextPool<OrderDbContext>(options => options.UseSqlServer(connectionString));
+
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
