@@ -16,14 +16,7 @@ COPY . .
 # Build all projects
 RUN dotnet build "OrderService.Api/OrderService.Api.csproj" -c Release
 
-# Stage 2: Run tests
-#FROM build AS test
-#WORKDIR /src/WebShopTests
-
-# Run tests and ensure they pass
-#RUN dotnet test "WebShopTests.csproj" --no-build --logger:trx --results-directory /src/TestResults
-
-# Stage 3: Publish WebShop (only proceeds if tests pass)
+# Stage 3: Publish WebShop
 FROM build AS publish
 WORKDIR /src/OrderService.Api
 RUN dotnet publish "OrderService.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
