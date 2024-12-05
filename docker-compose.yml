@@ -2,8 +2,8 @@ services:
   OrderService:
     build:
       context: .
-      dockerfile: WebShop.Api/Dockerfile
-    container_name: webshop
+      dockerfile: OrderService.Api/Dockerfile
+    container_name: orderservice
     ports:
       - "8080:8080"
     environment:
