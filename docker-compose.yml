@@ -4,20 +4,21 @@ services:
       context: .
       dockerfile: OrderService.Api/Dockerfile
     container_name: orderservice
-    image: orderservice:latest
     ports:
       - "8080:8080"
     environment:
       - ConnectionStrings__OrderDb=Server=db;Database=OrderDb;User Id=sa;Password=YourStrong!Password;TrustServerCertificate=True;
 
-  db:
+  sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
     ports:
       - "1433:1433"
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=YourStrong!Password
+      - SA_PASSWORD= "YourStrong!Password"
+      - ACCEPT_EULA= "Y"
+    volumes:
+      - sqlserver_data:/var/opt/mssqldb
 
 volumes:
   sqlserver_data:
