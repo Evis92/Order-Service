@@ -6,7 +6,7 @@ WORKDIR /src
 COPY ["OrderService.Api/OrderService.Api.csproj", "OrderService.Api/"]
 COPY ["OrderService.Application/OrderService.Application.csproj", "OrderService.Application/"]
 COPY ["OrderService.Core/OrderService.Core.csproj", "OrderService.Core/"]
-COPY ["OrderService.Infrastructure/OrderService.Infrastructure.csproj", "OrderService.Infrastructure/"]
+COPY ["../OrderService.Infrastructure/OrderService.Infrastructure.csproj", "OrderService.Infrastructure/"]
 
 RUN dotnet restore "OrderService.Api/OrderService.Api.csproj"
 

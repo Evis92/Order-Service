@@ -1,89 +1,29 @@
+version: "3.9"
 services:
-  orderservice:
-    build:
-      context: .
-      dockerfile: OrderService.Api/Dockerfile
-    container_name: orderservice
-    ports:
-      - "8080:8080"
-    environment:
-      - ConnectionStrings__OrderDb=Server=db;Database=OrderDb;User Id=sa;Password=YourStrong!Password;TrustServerCertificate=True;
-
-  sqlserver:
+  db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
     ports:
       - "1433:1433"
     environment:
-      - SA_PASSWORD= "YourStrong!Password"
-      - ACCEPT_EULA= "Y"
+      SA_PASSWORD: "YourStrong!Password"
+      ACCEPT_EULA: "Y"
     volumes:
-      - sqlserver_data:/var/opt/mssqldb
+      - sqlserver_data:/var/opt/mssql
+
+
+  orderservice:
+    build:
+      context: ./OrderService.Api
+      dockerfile: Dockerfile
+    container_name: OrderService
+    ports:
+      - "8080:8080"
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=db;Database=OrderDb;User Id=sa;Password=YourStrong!Password;TrustServerCertificate=True;"
+    depends_on:
+      - db
+
 
 volumes:
   sqlserver_data:
-
-
-
-
-# ######
-
-
-# services:
-#   order-service:
-#     build:
-#       context: ./OrderService/OrderService.Api
-#       dockerfile: Dockerfile
-#     ports:
-#       - "5001:80"
-#     networks:
-#       - pizza-network
-
-#   menu-service:
-#     build:
-#       context: ./MenuService/MenuService.Api
-#       dockerfile: Dockerfile
-#     ports:
-#       - "5002:80"
-#     networks:
-#       - pizza-network
-
-#   payment-service:
-#     build:
-#       context: ./PaymentService/PaymentService.Api
-#       dockerfile: Dockerfile
-#     ports:
-#       - "5003:80"
-#     networks:
-#       - pizza-network
-
-# networks:
-#   pizza-network:
-
-# ########
-
-#   services:
-#   order-service:
-#     build:
-#       context: ./OrderService/OrderService.Api
-#       dockerfile: Dockerfile
-#     ports:
-#       - "5001:80"
-#     networks:
-#       - pizza-network
-#     environment:
-#       - ConnectionStrings__OrderServiceDb=Server=sqlserver;Database=OrderServiceDb;User Id=sa;Password=YourStrongPassword;
-
-#   sqlserver:
-#     image: mcr.microsoft.com/mssql/server:2019-latest
-#     container_name: sqlserver
-#     environment:
-#       SA_PASSWORD: "YourStrongPassword"
-#       ACCEPT_EULA: "Y"
-#     ports:
-#       - "1433:1433"
-#     networks:
-#       - pizza-network
-
-# networks:
-#   pizza-network:
