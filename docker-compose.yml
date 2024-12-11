@@ -11,7 +11,7 @@ services:
     volumes:
       - sqlserver_data:/var/opt/mssql
 
-  payment-service:
+  order-service:
     build:
       context: .
       dockerfile: ./OrderService.Api/Dockerfile

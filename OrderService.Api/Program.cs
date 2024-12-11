@@ -8,19 +8,12 @@ using OrderService.Infrastructure.Data;
 using OrderService.Infrastructure.Repositories;
 using OrderService.Infrastructure.UnitOfWork;
 
-
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddControllers();
 
-//INMEMORYDATABASE
-//builder.Services.AddDbContext<OrderDbContext>(options => options.UseInMemoryDatabase("OrderDatabase"));
-
 var connectionString = builder.Configuration.GetConnectionString("OrderDb");
 builder.Services.AddDbContextPool<OrderDbContext>(options => options.UseSqlServer(connectionString));
-
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
@@ -33,18 +26,19 @@ builder.Services.AddSingleton<OrderSubject>(sp =>
 	return orderSubject;
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-	app.UseSwagger();
+using (var scope = app.Services.CreateScope())
+{
+	var dbContext = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
+	dbContext.Database.Migrate();
+}
+
+app.UseSwagger();
 	app.UseSwaggerUI();
-//}
 
 app.UseHttpsRedirection();
 
