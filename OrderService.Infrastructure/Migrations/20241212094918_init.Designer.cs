@@ -12,7 +12,7 @@ using OrderService.Infrastructure.Data;
 namespace OrderService.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderDbContext))]
-    [Migration("20241211135036_init")]
+    [Migration("20241212094918_init")]
     partial class init
     {
         /// <inheritdoc />
