@@ -9,19 +9,9 @@ using OrderService.Core.Interfaces.Order;
 using OrderService.Infrastructure.Data;
 using OrderService.Infrastructure.Repositories;
 using OrderService.Infrastructure.UnitOfWork;
-using OrderService.Infrastructure.RabbitMQ.Producers;
-using OrderService.Infrastructure.RabbitMQ;
-using OrderService.Infrastructure.RabbitMQ.Consumers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Lägg till RabbitMQ-konfiguration från appsettings.json
-var rabbitConfig = builder.Configuration.GetSection("RabbitMQ").Get<RabbitMQConfiguration>();
-builder.Services.AddSingleton(rabbitConfig);
-
-// Lägg till RabbitMQ-producer som singleton
-builder.Services.AddSingleton<OrderServiceProducer>();
-builder.Services.AddSingleton<OrderServiceConsumer>();
 
 builder.Services.AddControllers();
 
