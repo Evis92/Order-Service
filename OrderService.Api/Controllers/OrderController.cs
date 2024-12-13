@@ -2,7 +2,7 @@
 using OrderService.Core.Entities;
 using OrderService.Core.Interfaces.Order;
 
-namespace Order_Service.Api.Controllers;
+namespace OrderService.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
