@@ -33,9 +33,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Retry-logik för databasanslutning
 var policy = Policy.Handle<SqlException>()
-	.WaitAndRetryAsync(30, attempt => TimeSpan.FromSeconds(5), // 30 försök med 5 sekunder mellan
+	.WaitAndRetryAsync(30, attempt => TimeSpan.FromSeconds(5), 
 		(exception, timeSpan, retryCount, context) =>
 		{
 			Console.WriteLine($"Retry {retryCount} failed, waiting {timeSpan.TotalSeconds} seconds.");
@@ -46,17 +45,14 @@ using (var scope = app.Services.CreateScope())
 	var dbContext = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
 	try
 	{
-		// Försök att ansluta till databasen
 		await policy.ExecuteAsync(async () =>
 		{
-			// Försök att migrera databasen (om den inte redan är migrerad)
 			await dbContext.Database.MigrateAsync();
 			Console.WriteLine("Database connection succeeded and migration done.");
 		});
 	}
 	catch (Exception ex)
 	{
-		// Hantera om alla försök misslyckas
 		Console.WriteLine($"Could not connect to database {ex.Message}");
 		throw;
 	}
