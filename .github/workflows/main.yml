@@ -34,7 +34,7 @@ jobs:
       # Step 5: Push Docker Image to Registry
       - name: Push Docker Image
         run: |
-          IMAGE_NAME="orderservice"
+          IMAGE_NAME="evis92/order-service"
           docker push $IMAGE_NAME:${{ env.TAG_NAME }}
 
 # jobs:
