@@ -12,7 +12,6 @@ using OrderService.Infrastructure.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<OrderDbContext>(options =>
